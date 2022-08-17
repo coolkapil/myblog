@@ -1,1 +1,1 @@
-worker: waitress-serve --port=8000 myblog.wsgi:application
+web: waitress-serve --port=8000 myblog.wsgi:application
