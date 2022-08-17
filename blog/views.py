@@ -8,7 +8,38 @@ from rest_framework.response import Response
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer        
+    serializer_class = PostSerializer
+
+
+    def list(self, request):
+        if self.request.user.is_staff:
+            return super(PostViewSet, self).list(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+
+
+    def create(self, request):
+        if self.request.user.is_superuser:
+            return super(PostViewSet, self).create(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+
+
+    def update(self, request, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return super(PostViewSet, self).update(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+    
+    def destroy(self, request, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return super(PostViewSet, self).delete(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)        
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -17,32 +48,32 @@ class UserViewSet(viewsets.ModelViewSet):
     # permission_classes = (UserPermission,)
 
 
-    # def list(self, request):
-    #     if self.request.user.is_staff:
-    #         return super(UserViewSet, self).list(request)
-    #     else:
-    #         content = {'Unauthorised': 'This API is private'}
-    #         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+    def list(self, request):
+        if self.request.user.is_staff:
+            return super(UserViewSet, self).list(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
 
-    # def create(self, request):
-    #     if self.request.user.is_superuser:
-    #         return super(UserViewSet, self).create(request)
-    #     else:
-    #         content = {'Unauthorised': 'This API is private'}
-    #         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+    def create(self, request):
+        if self.request.user.is_superuser:
+            return super(UserViewSet, self).create(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
 
-    # def update(self, request, *args, **kwargs):
-    #     if self.request.user.is_superuser:
-    #         return super(UserViewSet, self).update(request)
-    #     else:
-    #         content = {'Unauthorised': 'This API is private'}
-    #         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+    def update(self, request, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return super(UserViewSet, self).update(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
     
-    # def destroy(self, request, *args, **kwargs):
-    #     if self.request.user.is_superuser:
-    #         return super(UserViewSet, self).delete(request)
-    #     else:
-    #         content = {'Unauthorised': 'This API is private'}
-    #         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+    def destroy(self, request, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return super(UserViewSet, self).delete(request)
+        else:
+            content = {'Unauthorised': 'This API is private'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
